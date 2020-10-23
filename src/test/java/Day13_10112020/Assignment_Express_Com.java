@@ -55,7 +55,7 @@ public class Assignment_Express_Com extends Abstract_Class {
         Jse.executeScript("scroll(0,500)");
         Thread.sleep(1000);
 
-        Reusable_Methods_Loggers.clickByIndex(driver, "//*[@class='_1ddDj _136PD']",2,"");
+        Reusable_Methods_Loggers.clickByIndex(driver, "//*[@class='_1ddDj _136PD']",2,"Third shirt");
         Thread.sleep(2000);
 
         Reusable_Methods_Loggers.click(driver, "//*[@class='_3OQxl']",logger,"L");
@@ -70,6 +70,9 @@ public class Assignment_Express_Com extends Abstract_Class {
         Reusable_Methods_Loggers.click(driver, "//*[@aria-label='Size selection button group']",logger,"ADD TO BAG");
         Thread.sleep(2000);
 
+        Reusable_Methods_Loggers.click(driver, "//*[text='Add to Bag']",logger,"ADD TO BAG");
+        Thread.sleep(2000);
+
 
        // Reusable_Methods_Loggers.mouseClick(driver, "//*[@aria-label='view bag']","view bag");
        // Thread.sleep(2000);
@@ -77,7 +80,11 @@ public class Assignment_Express_Com extends Abstract_Class {
 //Reusable_Methods_Loggers.mouseHover(driver,"//*[@class='BagIcon_numberOfItems__2eK5g']",logger,"View Bag");
      //   Thread.sleep(4000);
 
-        Reusable_Methods_Loggers.mouseHover(driver,"//*[@type='button']",logger,"Shopping bag icon");
+
+
+      //  Reusable_Methods_Loggers.mouseHover(driver,"//div[3]/div[1]/button[1]","Shopping bag icon");
+        //Reusable_Methods_Loggers.mouseClick(driver,"//*[contains(text('shoppingBag']',logger","VIEW BAG & CHECK OUT");
+        Reusable_Methods_Loggers.mouseHover(driver,"//*[contains'View Bag & Check Out']" ,logger,"VIEW BAG & CHECK OUT");
 
         Thread.sleep(3000);
 
@@ -87,3 +94,4 @@ public class Assignment_Express_Com extends Abstract_Class {
 
 
     }
+//Reusable_Methods.mouseHover(driver,"//div[3]/div[1]/button[1]","Shopping bag icon");

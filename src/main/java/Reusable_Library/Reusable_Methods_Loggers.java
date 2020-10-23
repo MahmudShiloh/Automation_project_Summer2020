@@ -11,6 +11,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -130,7 +133,6 @@ public class Reusable_Methods_Loggers {
             WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator)));
             element.clear();
             element.sendKeys(userInput);
-            Thread.sleep(1000);
             element.sendKeys(Keys.ENTER); //this is another way to submit to an element using key event
         } catch (Exception e) {
             System.out.println("Unable to enter on element " + elementName + " " + e);
@@ -157,13 +159,52 @@ public class Reusable_Methods_Loggers {
         Actions actions = new Actions(driver);
         try {
             System.out.println("Hovering mouse on element " + elementName);
-           // logger.log(LogStatus.INFO, "Hovering mouse on element " + elementName);
+            logger.log(LogStatus.INFO, "Hovering mouse on element " + elementName);
             WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator)));
             actions.moveToElement(element).perform();
         } catch (Exception err) {
             System.out.println("Unable to Hover mouse on element " + elementName + " " + err);
-           logger.log(LogStatus.FAIL, "Unable to Hover mouse on element " + elementName + " " + err);
-           //getScreenShot(driver, logger, elementName);
+            logger.log(LogStatus.FAIL, "Unable to Hover mouse on element " + elementName + " " + err);
+             getScreenShot(driver, logger, elementName);
         }
     }//end of click method
+
+
+    //method to capture screenshot when logger fails
+    public static void getScreenShot(WebDriver wDriver,ExtentTest logger,String imageName) {
+        try {
+            String fileName = imageName + ".png";
+            String directory = "src/main/java/HTML_Report/Screenshots/";
+            File sourceFile = ((TakesScreenshot) wDriver).getScreenshotAs(OutputType.FILE);
+            FileUtils.copyFile(sourceFile, new File(directory + fileName));
+            //String imgPath = directory + fileName;
+            String image = logger.addScreenCapture("Screenshots/" + fileName);
+            logger.log(LogStatus.FAIL, "", image);
+        } catch (Exception e) {
+            logger.log(LogStatus.FAIL, "Error Occured while taking SCREENSHOT!!!");
+            e.printStackTrace();
+        }
+    }//end of screenshot method
+
+
+
+    public static void uploadFile(String fileLocation) {
+        try {
+//Setting clipboard with file location
+            StringSelection stringSelection = new StringSelection(fileLocation);
+            Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+//native key strokes for CTRL, V and ENTER keys
+            Robot robot = new Robot();
+            robot.keyPress(KeyEvent.VK_CONTROL);
+            robot.keyPress(KeyEvent.VK_V);
+            robot.keyRelease(KeyEvent.VK_V);
+            robot.keyRelease(KeyEvent.VK_CONTROL);
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.keyRelease(KeyEvent.VK_ENTER);
+        } catch (Exception exp) {
+            exp.printStackTrace();
+        }
+    }//end of uploadFile method
+
+
 }
